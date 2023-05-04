@@ -1,0 +1,67 @@
+name: Main workflow
+
+on: [push]
+
+jobs:
+    security:
+        name: Security
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Check out repository code
+                uses: actions/checkout@master
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@master
+                with:
+                    php-version: '8.2'
+
+            -   name: Validate composer file
+                run: composer validate --no-check-version
+
+            -   name: Dependencies installation
+                run: composer install
+
+            -   name: Audit composer dependencies
+                run: composer security
+
+    code-quality:
+        name: Code quality
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Check out repository code
+                uses: actions/checkout@master
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@master
+                with:
+                    php-version: '8.2'
+
+            -   name: Validate composer file
+                run: composer validate --no-check-version
+
+            -   name: Dependencies installation
+                run: composer install
+
+            -   name: Run code-quality analysis
+                run: composer code-quality
+
+    tests:
+        name: Tests
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Check out repository code
+                uses: actions/checkout@master
+
+            -   name: Setup PHP
+                uses: shivammathur/setup-php@master
+                with:
+                    php-version: '8.2'
+
+            -   name: Validate composer file
+                run: composer validate --no-check-version
+
+            -   name: Dependencies installation
+                run: composer install
+
+            -   name: Run tests
+                run: composer tests
