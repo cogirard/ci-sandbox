@@ -1,4 +1,6 @@
 {
+    "name": "cogirard/ci-sandbox",
+    "description": "Project meant to be used as a sandbox for tests and other CI related actions",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "stable",
