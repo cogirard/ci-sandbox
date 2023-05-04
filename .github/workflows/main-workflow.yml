@@ -22,7 +22,7 @@ jobs:
                 run: composer install
 
             -   name: Audit composer dependencies
-                run: composer security
+                run: composer audit
 
     code-quality:
         name: Code quality

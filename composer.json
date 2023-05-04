@@ -86,7 +86,6 @@
             "@auto-scripts"
         ],
         "code-quality": "./vendor/bin/grumphp run --testsuite=code-quality",
-        "security": "./vendor/bin/grumphp run --testsuite=security",
         "tests": "./vendor/bin/grumphp run --testsuite=tests"
     },
     "conflict": {

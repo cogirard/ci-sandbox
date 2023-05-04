@@ -8,9 +8,6 @@ grumphp:
                 - git_blacklist
                 - file_size
                 - phpmnd
-        security:
-            tasks:
-                - securitychecker_local
         tests:
             tasks:
                 - phpunit
@@ -21,8 +18,6 @@ grumphp:
             no_check_publish: true
         phpstan:
             memory_limit: "512M"
-        securitychecker_local:
-            run_always: true
         phpcsfixer:
             allow_risky: false
             cache_file: ~
