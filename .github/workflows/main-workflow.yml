@@ -54,7 +54,7 @@ jobs:
                 env:
                     MYSQL_ALLOW_EMPTY_PASSWORD: false
                     MYSQL_ROOT_PASSWORD: sandbox
-                    MYSQL_DATABASE: sandbox
+                    MYSQL_DATABASE: sandbox_test
                 ports:
                     - 3306/tcp
 
