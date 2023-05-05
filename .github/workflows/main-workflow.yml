@@ -48,6 +48,16 @@ jobs:
     tests:
         name: Tests
         runs-on: ubuntu-latest
+        services:
+            mysql:
+                image: mysql:8
+                env:
+                    MYSQL_ALLOW_EMPTY_PASSWORD: false
+                    MYSQL_ROOT_PASSWORD: sandbox
+                    MYSQL_DATABASE: sandbox
+                ports:
+                    - 3306/tcp
+
         steps:
             -   name: Check out repository code
                 uses: actions/checkout@master
@@ -61,7 +71,17 @@ jobs:
                 run: composer validate --no-check-version
 
             -   name: Dependencies installation
-                run: composer install
+                run: composer install --no-progress --prefer-dist --optimize-autoloader
+
+            -   name: Run Migration
+                run: |
+                    php bin/console d:s:u -n -e test --force || echo "No migrations found or schema update failed"
+                    php bin/console d:m:m -n -e test || echo "No migrations found or migration failed"
+                env:
+                    DATABASE_URL: mysql://root:symfony@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/symfony
+
+            -   name: Run fixtures
+                run: php bin/console d:f:l -n -e test
 
             -   name: Run tests
                 run: composer tests

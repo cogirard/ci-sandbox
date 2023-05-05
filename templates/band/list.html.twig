@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row my-5">
+        <div class="col">
+            <h1>List of bands</h1>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Country</th>
+                <th scope="col">Created at</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for band in bands %}
+                <tr>
+                    <th scope="row">{{ band.id }}</th>
+                    <td>{{ band.name }}</td>
+                    <td>{{ band.country }}</td>
+                    <td>{{ band.createdAt|date('d/m/Y') }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

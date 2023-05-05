@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row my-5">
+        <div class="col">
+            <h1>List of artists</h1>
+        </div>
+    </div>
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Firstname</th>
+            <th scope="col">Lastname</th>
+            <th scope="col">Role</th>
+            <th scope="col">Band</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for artist in artists %}
+            <tr>
+                <th scope="row">{{ artist.id }}</th>
+                <td>{{ artist.firstName }}</td>
+                <td>{{ artist.lastName }}</td>
+                <td>{{ artist.role|capitalize }}</td>
+                <td>{{ artist.band }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
