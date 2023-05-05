@@ -73,12 +73,15 @@ jobs:
             -   name: Dependencies installation
                 run: composer install --no-progress --prefer-dist --optimize-autoloader
 
+            -   name: Setup test env
+                run: |
+                    cp .env.test .env.test.local
+                    printf '\nDATABASE_URL=mysql://root:symfony@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/symfony\n' >> .env.test.local
+
             -   name: Run Migration
                 run: |
                     php bin/console d:s:u -n -e test --force || echo "No migrations found or schema update failed"
                     php bin/console d:m:m -n -e test || echo "No migrations found or migration failed"
-                env:
-                    DATABASE_URL: mysql://root:symfony@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/symfony
 
             -   name: Run fixtures
                 run: php bin/console d:f:l -n -e test
