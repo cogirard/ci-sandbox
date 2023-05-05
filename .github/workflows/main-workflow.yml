@@ -75,6 +75,7 @@ jobs:
 
             -   name: Setup test env
                 run: |
+                    mysql -h 127.0.0.1 --port ${{ job.services.mysql.ports['3306'] }} -uroot -psymfony -e 'CREATE DATABASE IF NOT EXISTS sandbox_test;'
                     cp .env.test .env.test.local
                     printf '\nDATABASE_URL=mysql://root:symfony@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/symfony\n' >> .env.test.local
                     cat .env.test.local
