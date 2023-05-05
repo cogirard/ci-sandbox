@@ -56,7 +56,7 @@ jobs:
                     MYSQL_ROOT_PASSWORD: sandbox
                     MYSQL_DATABASE: sandbox_test
                 ports:
-                    - 3306/tcp
+                    - 3306:3306
 
         steps:
             -   name: Check out repository code
@@ -76,7 +76,7 @@ jobs:
             -   name: Setup test env
                 run: |
                     cp .env.test .env.test.local
-                    printf '\nDATABASE_URL=mysql://root:symfony@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/symfony\n' >> .env.test.local
+                    printf '\nDATABASE_URL=mysql://root:symfony@127.0.0.1:3306/symfony\n' >> .env.test.local
 
             -   name: Run Migration
                 run: |
