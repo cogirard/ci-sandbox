@@ -17,8 +17,8 @@ jobs:
                 run: |
                     LAST_JOB_STATUS=$(gh run list --workflow main-workflow.yml -b "${GITHUB_REF#refs/heads/}" | grep -oh "completed.*" | head -1 | awk '{print $2}')
                     
-                    if [ "$LAST_SECURITY_AND_QUALITY_JOB_STATUS" !=  "success" ]; then
-                        echo "Workflow security-and-quality.yml is not in success state ! [state: $LAST_SECURITY_AND_QUALITY_JOB_STATUS]";
+                    if [ "LAST_JOB_STATUS" !=  "success" ]; then
+                        echo "Workflow main-workflow.yml is not in success state ! [state: LAST_JOB_STATUS]";
                         exit 1;
                     fi
                 env:
