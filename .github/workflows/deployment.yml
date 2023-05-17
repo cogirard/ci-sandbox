@@ -1,7 +1,7 @@
 name: Project deployment
 
 on:
-    workflow_dispath:
+    workflow_dispatch:
         inputs:
             environment:
                 description: 'Environment on which the project must be deployed'
