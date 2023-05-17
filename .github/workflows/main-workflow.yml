@@ -67,6 +67,11 @@ jobs:
                 with:
                     php-version: '8.2'
 
+            -   name: Setup Node
+                uses: actions/setup-node@v3
+                with:
+                    node-version: '18.15.0'
+
             -   name: Validate composer file
                 run: composer validate --no-check-version
 
@@ -78,6 +83,16 @@ jobs:
                     cp .env.test .env.test.local
                     printf '\nDATABASE_URL=mysql://root:sandbox@127.0.0.1:${{ job.services.mysql.ports['3306'] }}/sandbox\n' >> .env.test.local
                     cat .env.test.local
+
+            -   name: Install front dependencies
+                uses: borales/actions-yarn@v4
+                with:
+                    cmd: install
+
+            -   name: Build production assets
+                uses: borales/actions-yarn@v4
+                with:
+                    cmd: encore prod
 
             -   name: Run Migration
                 run: |

@@ -49,8 +49,11 @@ final class UserFactory extends ModelFactory
     {
         return [
             'roles' => [],
-            'plainPassword' => self::faker()->password,
             'username' => self::faker()->userName,
+            'plainPassword' => self::faker()->password,
+            'firstName' => self::faker()->firstName,
+            'lastName' => self::faker()->lastName,
+            'dateOfBirth' => new \DateTimeImmutable(self::faker()->dateTime('2000-01-01')->format('Y-m-d')),
         ];
     }
 
