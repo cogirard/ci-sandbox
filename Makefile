@@ -71,6 +71,10 @@ migration: ## Créer un fichier de migration
 migrate: ## Lance les migrations
 	$(SYMFONY) doctrine:migration:migrate -n
 
+clear-cache:
+	$(SYMFONY) c:c
+	$(MAKE) fix-permissions
+
 ### Fronts (css/js)
 node: ## Lance le container node
 	$(MAKE) run c=node

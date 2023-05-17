@@ -1,0 +1,45 @@
+name: Project deployment
+
+on:
+    workflow_dispath:
+        inputs:
+            environment:
+                description: 'Environment on which the project must be deployed'
+                type: environment
+                required: true
+
+jobs:
+    deployment:
+        runs-on: [ self-hosted, "staging" ]
+        environment: "staging"
+        steps:
+            -   name: Check other workflows completion
+                run: |
+                    LAST_JOB_STATUS=$(gh run list --workflow main-workflow.yml -b "${GITHUB_REF#refs/heads/}" | grep -oh "completed.*" | head -1 | awk '{print $2}')
+                    
+                    if [ "$LAST_SECURITY_AND_QUALITY_JOB_STATUS" !=  "success" ]; then
+                        echo "Workflow security-and-quality.yml is not in success state ! [state: $LAST_SECURITY_AND_QUALITY_JOB_STATUS]";
+                        exit 1;
+                    fi
+                env:
+                    GH_TOKEN: ${{ github.token }}
+
+            -   name: Switch to current branch
+                run: git checkout "${GITHUB_REF#refs/heads/}"
+                working-directory: '${{ secrets.PROJECT_DIRECTORY }}'
+
+            -   name: Pull last changes
+                run: git pull
+                working-directory: '${{ secrets.PROJECT_DIRECTORY }}'
+
+            -   name: Install dependencies
+                run: make vendor
+                working-directory: '${{ secrets.PROJECT_DIRECTORY }}'
+
+            -   name: Launch database migration
+                run: make migrate
+                working-directory: '${{ secrets.PROJECT_DIRECTORY }}'
+
+            -   name: Clear cache
+                run: make clear-cache
+                working-directory: '${{ secrets.PROJECT_DIRECTORY }}'
