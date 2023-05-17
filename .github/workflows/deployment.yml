@@ -23,6 +23,7 @@ jobs:
                     fi
                 env:
                     GH_TOKEN: ${{ github.token }}
+                working-directory: '${{ secrets.PROJECT_DIRECTORY }}'
 
             -   name: Switch to current branch
                 run: git checkout "${GITHUB_REF#refs/heads/}"
