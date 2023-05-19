@@ -41,8 +41,8 @@ jobs:
 
             -   name: Set env variables
                 run: |
-                    touch .env.local
-                    echo "$DATABASE_URL" >> .env.local
+                    sed -i '/DATABASE_URL/c\\"$DATABASE_URL\"' .env.local
+                working-directory: '${{ secrets.PROJECT_DIRECTORY }}'
 
             -   name: Launch database migration
                 run: make migrate
