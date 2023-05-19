@@ -41,7 +41,8 @@ jobs:
 
             -   name: Set env variables
                 run: |
-                    sed -i '/DATABASE_URL/c\\"$DATABASE_URL\"' ./.env.local
+                    touch .env.local
+                    echo "$DATABASE_URL" >> .env.local
 
             -   name: Launch database migration
                 run: make migrate
