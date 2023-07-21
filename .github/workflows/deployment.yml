@@ -12,8 +12,6 @@ jobs:
     deployment:
         runs-on: [ self-hosted, "staging" ]
         environment: "staging"
-        env:
-            DATABASE_URL: mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@mysql:3306/${{ secrets.MYSQL_DATABASE }}?serverVersion=8.0.32&charset=utf8mb4
         steps:
             -   name: Check other workflows completion
                 run: |
